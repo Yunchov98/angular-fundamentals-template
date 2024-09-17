@@ -1,0 +1,8 @@
+<app-course-list
+    *ngIf="!isShowButtonClicked"
+    (showCourse)="onShowCourse($event)"
+    [courses]="mappedCourses"
+></app-course-list>
+<app-course-info *ngIf="isShowButtonClicked" [course]="selectedCourse">
+    <app-button buttonText="Back" (click)="onBack()"></app-button>
+</app-course-info>
