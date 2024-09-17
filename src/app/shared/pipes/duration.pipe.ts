@@ -1,8 +1,15 @@
-import { Pipe } from "@angular/core";
+import { Pipe } from '@angular/core';
 
 @Pipe({
-    name: 'duration'
+    name: 'duration',
 })
 export class DurationPipe {
-    // Add your code here
+    transform(minutes: number): string {
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = minutes % 60;
+
+        return remainingMinutes < 10
+            ? `${hours}h:0${remainingMinutes}m`
+            : `${hours}h:${remainingMinutes}m`;
+    }
 }
