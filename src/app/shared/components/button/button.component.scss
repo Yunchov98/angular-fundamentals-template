@@ -15,7 +15,21 @@
         background: #016486;
     }
 
+    &:active {
+        background-color: #004c65;
+    }
+
     &__single-icon {
         padding: 13px;
+    }
+}
+
+.white-button {
+    background-color: transparent;
+    color: #007298;
+
+    &:hover {
+        background-color: transparent;
+        color: #016486;
     }
 }
