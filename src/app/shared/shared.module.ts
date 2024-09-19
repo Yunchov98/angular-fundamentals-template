@@ -18,6 +18,7 @@ import {
 
 import { DurationPipe } from './pipes/duration.pipe';
 import { CustomDatePipe } from './pipes/custom-date.pipe';
+import { AuthorsPipe } from './pipes/authors.pipe';
 
 const components = [
     HeaderComponent,
@@ -31,6 +32,7 @@ const components = [
     CourseFormComponent,
     DurationPipe,
     CustomDatePipe,
+    AuthorsPipe,
     EmailValidatorDirective,
 ];
 
