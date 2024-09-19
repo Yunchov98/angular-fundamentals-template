@@ -9,7 +9,6 @@ import Author from '@app/core/interfaces/author';
 @Component({
     selector: 'app-courses',
     templateUrl: './courses.component.html',
-    styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent {
     courses: Course[] = mockedCoursesList;
