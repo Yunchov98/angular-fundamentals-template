@@ -16,9 +16,10 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
     templateUrl: './course-form.component.html',
     styleUrls: ['./course-form.component.scss'],
 })
-export class CourseFormComponent implements OnInit {
+export class CourseFormComponent {
     constructor(public fb: FormBuilder, public library: FaIconLibrary) {
         library.addIconPacks(fas);
+        this.buildForm();
     }
     courseForm!: FormGroup;
     authorsList: Author[] = [];
@@ -30,7 +31,7 @@ export class CourseFormComponent implements OnInit {
     deleteIcon = faIcons.delete;
     // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
 
-    ngOnInit(): void {
+    buildForm(): void {
         console.log(this.deleteIcon);
 
         this.courseForm = new FormGroup({
