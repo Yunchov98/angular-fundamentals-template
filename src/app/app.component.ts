@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { mockedCoursesList } from './shared/mocks/mock';
 
 @Component({
     selector: 'app-root',
@@ -11,5 +12,9 @@ export class AppComponent {
 
     onLoginToggleHandler() {
         this.isLoggedIn = !this.isLoggedIn;
+    }
+
+    onCourseSearch(query: string) {
+        console.log(query);
     }
 }
