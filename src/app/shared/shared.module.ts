@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { EmailValidatorDirective } from '@shared/directives/email.directive';
+import { TogglePasswordDirective } from './directives/toggle-password.directive';
 
 import { ModalComponent } from './components/modal/modal.component';
 import {
@@ -34,6 +36,7 @@ const components = [
     CustomDatePipe,
     AuthorsPipe,
     EmailValidatorDirective,
+    TogglePasswordDirective,
 ];
 
 @NgModule({
