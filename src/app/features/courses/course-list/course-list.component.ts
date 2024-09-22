@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { faPencil, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 import Course from '@app/core/interfaces/course';
+import { faIcons } from '@app/shared/common/fa-icons';
 
 @Component({
     selector: 'app-course-list',
@@ -15,8 +15,8 @@ export class CourseListComponent {
     @Output() editCourse = new EventEmitter<Course>();
     @Output() deleteCourse = new EventEmitter<Course>();
 
-    editIcon = faPencil;
-    deleteIcon = faTrashCan;
+    editIcon = faIcons.edit;
+    deleteIcon = faIcons.delete;
 
     onShowCourse(course: Course) {
         this.showCourse.emit(course);
