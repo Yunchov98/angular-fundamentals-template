@@ -1,9 +1,19 @@
 @import 'src/app/shared/styles/styles';
 
 .registration-form {
-  width: 260px;
-  margin-top: 36px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    width: 260px;
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.password-input-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 6%;
+    left: 87%;
 }
