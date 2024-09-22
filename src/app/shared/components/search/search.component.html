@@ -2,8 +2,12 @@
     <input
         type="text"
         placeholder="Input text"
-        [(ngModel)]="searchQuery"
         [placeholder]="placeholder"
+        #search="ngModel"
+        ngModel
     />
-    <app-button buttonText="search" (click)="onSearch()"></app-button>
+    <app-button
+        buttonText="search"
+        (click)="onSearch(search.value)"
+    ></app-button>
 </div>

@@ -9,9 +9,7 @@ export class SearchComponent {
     @Input() placeholder!: string;
     @Output() search = new EventEmitter<string>();
 
-    searchQuery!: string;
-
-    onSearch() {
-        this.search.emit(this.searchQuery.trim());
+    onSearch(value: string) {
+        this.search.emit(value);
     }
 }
