@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
     FormArray,
     FormBuilder,
@@ -48,7 +48,7 @@ export class CourseFormComponent {
                 Validators.min(0),
             ]),
             authors: this.fb.array([]),
-            author: new FormGroup({
+            newAuthor: new FormGroup({
                 author: new FormControl(null, [
                     Validators.minLength(2),
                     Validators.pattern('^[a-zA-Z0-9]+$'),
