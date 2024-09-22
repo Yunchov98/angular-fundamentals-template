@@ -1,56 +1,131 @@
-<!-- Replace ::text:: with your code -->
 <h2>Create / Edit Course</h2>
-<form>
-  <div class="app-plate">
-    <div class="course">
-      <h3>Main Info</h3>
-      <div class="form__control">
-        <label for="title">Title</label>
-        <!--Use the name `title` for the form control.-->
-        <input type="text" id="title" placeholder="Input text"/>
-        <span id="titleErrorMessage" class="text-danger">Title is required.</span>
-      </div>
-      <div class="form__control">
-        <label for="description">Description</label>
-        <!--Use the name `description` for the form control.-->
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Input text"
-          rows="4"
-          cols="5"
-        ></textarea>
-        <span id="descriptionErrorMessage" class="text-danger">Description is required.</span>
-      </div>
-      <div class="separator"></div>
-      <h3>Authors</h3>
-      <div class="form__control">
-        <div class="course__flex">
-          <!--Use the name `author` for the form control.-->
-          <input type="text" id="author" placeholder="Input Author Name"/>
-          <app-button id="createAuthor"></app-button>
+<form [formGroup]="courseForm">
+    <div class="app-plate">
+        <div class="course">
+            <h3>Main Info</h3>
+            <div class="form__control">
+                <label for="title">Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Input text"
+                    formControlName="title"
+                />
+                <span
+                    id="titleErrorMessage"
+                    class="text-danger"
+                    *ngIf="
+                        (!courseForm.get('title')?.valid &&
+                            courseForm.get('title')?.touched) ||
+                        (!courseForm.get('title')?.valid && isFormSubmmited)
+                    "
+                    >Title is required.</span
+                >
+            </div>
+            <div class="form__control">
+                <label for="description">Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Input text"
+                    rows="4"
+                    cols="5"
+                    formControlName="description"
+                ></textarea>
+                <span
+                    id="descriptionErrorMessage"
+                    class="text-danger"
+                    *ngIf="
+                        (!courseForm.get('description')?.valid &&
+                            courseForm.get('description')?.touched) ||
+                        (!courseForm.get('description')?.valid &&
+                            isFormSubmmited)
+                    "
+                    >Description is required.</span
+                >
+            </div>
+            <div class="separator"></div>
+            <h3>Authors</h3>
+            <div class="form__control" formGroupName="newAuthor">
+                <div class="course__flex">
+                    <input
+                        type="text"
+                        id="author"
+                        placeholder="Input Author Name"
+                        formControlName="author"
+                    />
+                    <app-button
+                        id="createAuthor"
+                        buttonText="create author"
+                        (click)="addAuthor()"
+                    ></app-button>
+                </div>
+                <span
+                    id="authorErrorMessage"
+                    *ngIf="
+                        (!courseForm.get('author')?.valid &&
+                            courseForm.get('author')?.touched) ||
+                        (!courseForm.get('author')?.valid && isFormSubmmited)
+                    "
+                    >New author should contain only latin letters and
+                    numbers.</span
+                >
+                <div class="course__authors">
+                    <h4>Authors List</h4>
+                    <ul class="authors-list">
+                        <li *ngFor="let author of authorsList; let i = index">
+                            <p>{{ author.name }}</p>
+                            <p class="button" (click)="assignAuthor(author)">
+                                +
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="course__authors">
+                    <h4>Course Authors</h4>
+                    <ul>
+                        <li *ngFor="let author of courseAuthors; let i = index">
+                            <p>{{ author.name }}</p>
+                            <p class="button" (click)="removeAuthor(author)">
+                                <fa-icon [icon]="deleteIcon"></fa-icon>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="separator"></div>
+            <h3>Duration</h3>
+            <div class="form__control">
+                <div class="course__flex">
+                    <input
+                        type="number"
+                        id="duration"
+                        placeholder="Input duration"
+                        formControlName="duration"
+                    />
+                    <div class="course__duration">
+                        {{ courseForm.get('duration')?.value | duration }}
+                        hours
+                    </div>
+                </div>
+                <span
+                    id="durationErrorMessage"
+                    class="text-danger"
+                    *ngIf="
+                        (!courseForm.get('duration')?.valid &&
+                            courseForm.get('duration')?.touched) ||
+                        (!courseForm.get('duration')?.valid && isFormSubmmited)
+                    "
+                    >Duration is required.</span
+                >
+            </div>
+            <div class="form__action">
+                <app-button
+                    buttonText="Create Course"
+                    (click)="onSubmit()"
+                ></app-button>
+            </div>
         </div>
-        <span id="authorErrorMessage">New author should contain only latin letters and numbers.</span>
-        <div class="course__authors">
-          <!--Use the name `authors` for the form array.-->
-          ::Authors::
-        </div>
-      </div>
-      <div class="separator"></div>
-      <h3>Duration</h3>
-      <div class="form__control">
-        <div class="course__flex">
-          <!--Use the name `duration` for the form array.-->
-          <input type="number" id="duration" placeholder="Input duration"/>
-          <div class="course__duration">
-            ::Duration::
-          </div>
-        </div>
-        <span id="durationErrorMessage" class="text-danger">Duration is required.</span>
-      </div>
-      <div class="form__action">
-        <app-button></app-button>
-      </div>
     </div>
-  </div>
 </form>
