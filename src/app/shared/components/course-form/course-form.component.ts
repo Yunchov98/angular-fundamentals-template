@@ -48,7 +48,7 @@ export class CourseFormComponent {
                 Validators.min(0),
             ]),
             authors: this.fb.array([]),
-            newAuthor: new FormGroup({
+            author: new FormGroup({
                 author: new FormControl(null, [
                     Validators.minLength(2),
                     Validators.pattern('^[a-zA-Z0-9]+$'),
@@ -62,7 +62,7 @@ export class CourseFormComponent {
     }
 
     addAuthor() {
-        const authorNameControl = this.courseForm.get('newAuthor.author');
+        const authorNameControl = this.courseForm.get('author.author');
 
         if (authorNameControl?.value === null) return;
 
