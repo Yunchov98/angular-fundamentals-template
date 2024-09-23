@@ -28,6 +28,5 @@ export class RegistrationFormComponent implements OnInit {
 
     onRegister(): void {
         this.isFormSubmmited = true;
-        console.log(this.registrationForm);
     }
 }

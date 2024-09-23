@@ -32,8 +32,6 @@ export class CourseFormComponent {
     // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
 
     buildForm(): void {
-        console.log(this.deleteIcon);
-
         this.courseForm = new FormGroup({
             title: new FormControl(null, [
                 Validators.required,
@@ -48,8 +46,8 @@ export class CourseFormComponent {
                 Validators.min(0),
             ]),
             authors: this.fb.array([]),
-            author: new FormGroup({
-                author: new FormControl(null, [
+            newAuthor: this.fb.group({
+                name: new FormControl(null, [
                     Validators.minLength(2),
                     Validators.pattern('^[a-zA-Z0-9]+$'),
                 ]),
@@ -62,7 +60,7 @@ export class CourseFormComponent {
     }
 
     addAuthor() {
-        const authorNameControl = this.courseForm.get('author.author');
+        const authorNameControl = this.courseForm.get('newAuthor.name');
 
         if (authorNameControl?.value === null) return;
 
@@ -79,9 +77,6 @@ export class CourseFormComponent {
     assignAuthor(author: Author) {
         this.authorsList = this.authorsList.filter((a) => a.id !== author.id);
         this.courseAuthors.push(author);
-
-        console.log('authors list', this.authorsList);
-        console.log('course list', this.courseAuthors);
     }
 
     removeAuthor(author: Author) {
@@ -93,6 +88,5 @@ export class CourseFormComponent {
 
     onSubmit() {
         this.isFormSubmmited = true;
-        console.log('Form Submmited!');
     }
 }
