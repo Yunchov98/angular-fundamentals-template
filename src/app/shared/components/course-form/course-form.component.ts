@@ -46,7 +46,7 @@ export class CourseFormComponent {
                 Validators.min(0),
             ]),
             authors: this.fb.array([]),
-            newAuthor: this.fb.group({
+            newAuthor: new FormGroup({
                 name: new FormControl(null, [
                     Validators.minLength(2),
                     Validators.pattern('^[a-zA-Z0-9]+$'),
