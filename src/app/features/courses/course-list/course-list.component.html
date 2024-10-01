@@ -1,23 +1,28 @@
 <div class="courses-list">
-    <app-course-card
-        *ngFor="let course of courses"
-        [title]="course.title"
-        [description]="course.description"
-        [creationDate]="course.creationDate"
-        [duration]="course.duration"
-        [authors]="course.authors"
-        [editable]="editable"
-        (clickOnShow)="onShowCourse(course)"
-    >
-        <app-button
-            buttonStyle="white-button"
-            [iconName]="deleteIcon"
-            (click)="onDeleteCourse(course)"
-        ></app-button>
-        <app-button
-            buttonStyle="white-button"
-            [iconName]="editIcon"
-            (click)="onEditCourse(course)"
-        ></app-button>
-    </app-course-card>
+    <ng-container *ngIf="courses && courses.length > 0; else noCoursesTemplate">
+        <app-course-card
+            *ngFor="let course of courses"
+            [title]="course.title"
+            [description]="course.description"
+            [creationDate]="course.creationDate"
+            [duration]="course.duration"
+            [authors]="course.authors"
+            [editable]="editable"
+            (clickOnShow)="onShowCourse(course)"
+        >
+            <app-button
+                buttonStyle="white-button"
+                [iconName]="deleteIcon"
+                (click)="onDeleteCourse(course)"
+            ></app-button>
+            <app-button
+                buttonStyle="white-button"
+                [iconName]="editIcon"
+                (click)="onEditCourse(course)"
+            ></app-button>
+        </app-course-card>
+    </ng-container>
+    <ng-template #noCoursesTemplate>
+        <p>No courses available.</p>
+    </ng-template>
 </div>
