@@ -1,8 +1,16 @@
-<app-course-list
-    *ngIf="!isShowButtonClicked"
-    (showCourse)="onShowCourse($event)"
-    [courses]="mappedCourses"
-></app-course-list>
-<app-course-info *ngIf="isShowButtonClicked" [course]="selectedCourse">
-    <app-button buttonText="Back" (click)="onBack()"></app-button>
-</app-course-info>
+<app-search (search)="onSearch($event)" placeholder="Search..."></app-search>
+
+<ng-container *ngIf="!errorMessage; else noCourses">
+    <app-course-list
+        *ngIf="!isShowButtonClicked"
+        (showCourse)="onShowCourse($event)"
+        [courses]="filteredCourses.length > 0 ? filteredCourses : courses"
+    ></app-course-list>
+    <app-course-info *ngIf="isShowButtonClicked" [course]="selectedCourse">
+        <app-button buttonText="Back" (click)="onBack()"></app-button>
+    </app-course-info>
+</ng-container>
+
+<ng-template #noCourses>
+    <h1>{{errorMessage}}</h1>
+</ng-template>
