@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserService } from './user.service';
 import UserMe from '@app/core/interfaces/user-me';
 import { CONSTANTS } from '@app/core/environments/constants';
+import User from '@app/core/interfaces/user';
 
 @Injectable({
     providedIn: 'root',
@@ -18,16 +19,22 @@ export class UserStoreService implements OnDestroy {
 
     constructor(private userService: UserService) {}
 
-    getUser(): void {
-        this.subscription$ = this.userService.getUser().subscribe({
-            next: (user: UserMe) => {
-                this.name$$.next(user.result.name);
-                this.isAdmin$$.next(user.result.role === CONSTANTS.adminRole);
-            },
-            error: () => {
-                this.name$$.next('');
-                this.isAdmin$$.next(false);
-            },
+    getUser(): Observable<UserMe> {
+        return new Observable<UserMe>((observer) => {
+            this.subscription$ = this.userService.getUser().subscribe({
+                next: (user: UserMe) => {
+                    this.isAdmin$$.next(
+                        user.result.role === CONSTANTS.adminRole
+                    );
+                    this.name$$.next(user.result.name);
+                    observer.next(user);
+                    observer.complete();
+                },
+                error: () => {
+                    this.name$$.next('');
+                    this.isAdmin$$.next(false);
+                },
+            });
         });
     }
 
