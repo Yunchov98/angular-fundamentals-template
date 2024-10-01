@@ -21,6 +21,7 @@ import {
 import { DurationPipe } from './pipes/duration.pipe';
 import { CustomDatePipe } from './pipes/custom-date.pipe';
 import { AuthorsPipe } from './pipes/authors.pipe';
+import { RouterModule, Routes } from '@angular/router';
 
 const components = [
     HeaderComponent,
@@ -39,6 +40,11 @@ const components = [
     TogglePasswordDirective,
 ];
 
+const routes: Routes = [
+    { path: 'login', component: LoginFormComponent },
+    { path: 'registration', component: RegistrationFormComponent },
+];
+
 @NgModule({
     declarations: [components],
     imports: [
@@ -46,7 +52,8 @@ const components = [
         FontAwesomeModule,
         FormsModule,
         ReactiveFormsModule,
+        RouterModule.forChild(routes),
     ],
-    exports: [components],
+    exports: [components, RouterModule],
 })
 export class SharedModule {}
