@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
     FormArray,
     FormBuilder,
@@ -17,13 +17,14 @@ import { CoursesStoreService } from '@app/services/courses-store.service';
 import { faIcons } from '@app/shared/common/fa-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-course-form',
     templateUrl: './course-form.component.html',
     styleUrls: ['./course-form.component.scss'],
 })
-export class CourseFormComponent {
+export class CourseFormComponent implements OnDestroy {
     constructor(
         private coursesStoreService: CoursesStoreService,
         private router: Router,
@@ -41,6 +42,7 @@ export class CourseFormComponent {
     author!: Author;
     authorsId: string[] = [];
     errorMessage!: string;
+    authorSubscription$!: Subscription;
 
     addIcon = faIcons.add;
     deleteIcon = faIcons.delete;
@@ -80,7 +82,7 @@ export class CourseFormComponent {
             return;
         }
 
-        this.coursesStoreService
+        this.authorSubscription$ = this.coursesStoreService
             .createAuthor(authorNameControl?.value)
             .subscribe({
                 next: (author) => {
@@ -121,5 +123,11 @@ export class CourseFormComponent {
         this.coursesStoreService.createCourse(course);
         this.isFormSubmmited = true;
         this.router.navigate([ROUTES.courses]);
+    }
+
+    ngOnDestroy(): void {
+        if (this.authorSubscription$ !== undefined) {
+            this.authorSubscription$.unsubscribe();
+        }
     }
 }
