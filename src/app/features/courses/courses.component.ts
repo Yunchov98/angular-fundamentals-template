@@ -59,18 +59,20 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
     onSearch(searchTerm: string): void {
         if (searchTerm) {
-            this.coursesService.filterCourses(searchTerm).subscribe({
-                next: (response) => {
-                    if (response.result.length > 0) {
-                        this.filteredCourses = response.result;
-                        this.errorMessage = '';
-                    } else {
-                        this.errorMessage =
-                            'Course with this title does not exist.';
-                    }
-                },
-                error: (error) => console.log(error),
-            });
+            this.coursesService
+                .filterCourses(searchTerm.split(' ').join(', '))
+                .subscribe({
+                    next: (response) => {
+                        if (response.result.length > 0) {
+                            this.filteredCourses = response.result;
+                            this.errorMessage = '';
+                        } else {
+                            this.errorMessage =
+                                'Course with this title does not exist.';
+                        }
+                    },
+                    error: (error) => console.log(error),
+                });
         }
     }
 }
