@@ -1,5 +1,5 @@
-import Author from '@app/core/interfaces/author';
-import Course from '@app/core/interfaces/course';
+import Author from '@app/core/interfaces/author.interface';
+import Course from '@app/core/interfaces/course.interface';
 
 export const mockedCoursesList: Course[] = [
     {
