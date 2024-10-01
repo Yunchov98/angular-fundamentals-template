@@ -1,3 +1,4 @@
+import { identifierName } from '@angular/compiler';
 import { Component } from '@angular/core';
 import {
     FormArray,
@@ -6,7 +7,15 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
-import Author from '@app/core/interfaces/author';
+import { Router } from '@angular/router';
+import { ROUTES } from '@app/core/environments/endpoints';
+
+import Author from '@app/core/interfaces/author.interface';
+import CourseForm from '@app/core/interfaces/course-form.interface';
+import Course from '@app/core/interfaces/course.interface';
+
+import { CoursesStoreService } from '@app/services/courses-store.service';
+
 import { faIcons } from '@app/shared/common/fa-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +26,12 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
     styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent {
-    constructor(public fb: FormBuilder, public library: FaIconLibrary) {
+    constructor(
+        private coursesStoreService: CoursesStoreService,
+        private router: Router,
+        public fb: FormBuilder,
+        public library: FaIconLibrary
+    ) {
         library.addIconPacks(fas);
         this.buildForm();
     }
@@ -26,10 +40,12 @@ export class CourseFormComponent {
     courseAuthors: Author[] = [];
     authorIdCounter = 1;
     isFormSubmmited!: boolean;
+    author!: Author;
+    authorsId: string[] = [];
+    errorMessage!: string;
 
     addIcon = faIcons.add;
     deleteIcon = faIcons.delete;
-    // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
 
     buildForm(): void {
         this.courseForm = new FormGroup({
@@ -62,31 +78,55 @@ export class CourseFormComponent {
     addAuthor() {
         const authorNameControl = this.courseForm.get('newAuthor.name');
 
-        if (authorNameControl?.value === null) return;
+        if (authorNameControl?.value === null) {
+            return;
+        }
 
-        const newAuthor: Author = {
-            id: this.authorIdCounter++,
-            name: authorNameControl?.value,
-        };
+        this.coursesStoreService
+            .createAuthor(authorNameControl?.value)
+            .subscribe({
+                next: (author) => {
+                    this.author = author;
 
-        this.authorsList.push(newAuthor);
+                    const authorFormGroup = new FormGroup({
+                        id: new FormControl(author.id),
+                        name: new FormControl(author.name),
+                    });
+                    this.authors.push(authorFormGroup);
+
+                    this.authorsId.push(author.id.toString());
+                    console.log(this.authorsId);
+                },
+                error: (error) => (this.errorMessage = error),
+                complete: () => {
+                    for (const author of this.authors.controls) {
+                        console.log(author.get('id')?.value)
+                    }
+                },
+            });
 
         authorNameControl?.reset();
     }
 
-    assignAuthor(author: Author) {
-        this.authorsList = this.authorsList.filter((a) => a.id !== author.id);
-        this.courseAuthors.push(author);
-    }
+    // assignAuthor(author: Author) {
+    //     this.authorsList = this.authorsList.filter((a) => a.id !== author.id);
+    //     this.courseAuthors.push(author);
+    // }
 
-    removeAuthor(author: Author) {
-        this.authorsList.push(author);
-        this.courseAuthors = this.courseAuthors.filter(
-            (a) => a.id !== author.id
-        );
+    removeAuthor(id: string) {
+        this.authorsId.filter((authorId) =>  authorId !== id);
+        console.log(`Deleted author with id -> ${id}`);
     }
 
     onSubmit() {
+        const course: CourseForm = {
+            title: this.courseForm.get('title')?.value,
+            description: this.courseForm.get('description')?.value,
+            duration: this.courseForm.get('duration')?.value,
+            authors: this.authorsId,
+        };
+        this.coursesStoreService.createCourse(course);
         this.isFormSubmmited = true;
+        this.router.navigate([ROUTES.courses]);
     }
 }
