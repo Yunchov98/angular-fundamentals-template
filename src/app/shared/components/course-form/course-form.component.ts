@@ -1,4 +1,3 @@
-import { identifierName } from '@angular/compiler';
 import { Component } from '@angular/core';
 import {
     FormArray,
@@ -10,9 +9,8 @@ import {
 import { Router } from '@angular/router';
 import { ROUTES } from '@app/core/environments/endpoints';
 
-import Author from '@app/core/interfaces/author.interface';
-import CourseForm from '@app/core/interfaces/course-form.interface';
-import Course from '@app/core/interfaces/course.interface';
+import Author from '@app/core/interfaces/author';
+import CourseForm from '@app/core/interfaces/course-form';
 
 import { CoursesStoreService } from '@app/services/courses-store.service';
 
@@ -100,7 +98,7 @@ export class CourseFormComponent {
                 error: (error) => (this.errorMessage = error),
                 complete: () => {
                     for (const author of this.authors.controls) {
-                        console.log(author.get('id')?.value)
+                        console.log(author.get('id')?.value);
                     }
                 },
             });
@@ -108,13 +106,8 @@ export class CourseFormComponent {
         authorNameControl?.reset();
     }
 
-    // assignAuthor(author: Author) {
-    //     this.authorsList = this.authorsList.filter((a) => a.id !== author.id);
-    //     this.courseAuthors.push(author);
-    // }
-
     removeAuthor(id: string) {
-        this.authorsId.filter((authorId) =>  authorId !== id);
+        this.authorsId.filter((authorId) => authorId !== id);
         console.log(`Deleted author with id -> ${id}`);
     }
 

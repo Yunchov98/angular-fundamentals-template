@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import Course from '@app/core/interfaces/course.interface';
-import Author from '@app/core/interfaces/author.interface';
+import Course from '@app/core/interfaces/course';
+import Author from '@app/core/interfaces/author';
 
 import { CoursesService } from '@app/services/courses.service';
 
@@ -50,7 +50,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     onShowCourse(course: Course) {
         this.selectedCourse = course;
         this.isShowButtonClicked = true;
-        this
+        this;
     }
 
     onBack() {

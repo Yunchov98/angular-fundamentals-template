@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserService } from './user.service';
-import UserMe from '@app/core/interfaces/user-me.interface';
+import UserMe from '@app/core/interfaces/user-me';
 import { CONSTANTS } from '@app/core/environments/constants';
 
 @Injectable({

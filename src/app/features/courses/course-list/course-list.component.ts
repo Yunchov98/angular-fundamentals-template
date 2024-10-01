@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import Course from '@app/core/interfaces/course.interface';
+import Course from '@app/core/interfaces/course';
 import { faIcons } from '@app/shared/common/fa-icons';
 
 @Component({

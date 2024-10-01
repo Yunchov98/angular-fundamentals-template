@@ -1,11 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '@app/auth/services/auth.service';
-import { ROUTES } from '@app/core/environments/endpoints';
-import User from '@app/core/interfaces/user.interface';
-import { faIcons } from '@app/shared/common/fa-icons';
 import { Subscription } from 'rxjs';
+
+import { ROUTES } from '@app/core/environments/endpoints';
+import { faIcons } from '@app/shared/common/fa-icons';
+
+import { AuthService } from '@app/auth/services/auth.service';
+
+import User from '@app/core/interfaces/user';
 
 @Component({
     selector: 'app-registration-form',

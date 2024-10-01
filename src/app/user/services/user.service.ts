@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
 import { CONSTANTS } from '@app/core/environments/constants';
 import { ENDPOINTS, ROUTES } from '@app/core/environments/endpoints';
-import UserMe from '@app/core/interfaces/user-me.interface';
+import UserMe from '@app/core/interfaces/user-me';
 import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({

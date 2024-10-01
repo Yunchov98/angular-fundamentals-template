@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
-import User from '@app/core/interfaces/user.interface';
+import User from '@app/core/interfaces/user';
 
 import { SessionStorageService } from './session-storage.service';
 

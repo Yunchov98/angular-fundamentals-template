@@ -1,12 +1,15 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '@app/auth/services/auth.service';
-import { ROUTES } from '@app/core/environments/endpoints';
-import User from '@app/core/interfaces/user.interface';
-import { faIcons } from '@app/shared/common/fa-icons';
-import { UserStoreService } from '@app/user/services/user-store.service';
 import { Subscription } from 'rxjs';
+
+import { ROUTES } from '@app/core/environments/endpoints';
+import { faIcons } from '@app/shared/common/fa-icons';
+
+import { AuthService } from '@app/auth/services/auth.service';
+import { UserStoreService } from '@app/user/services/user-store.service';
+
+import User from '@app/core/interfaces/user';
 
 @Component({
     selector: 'app-login-form',

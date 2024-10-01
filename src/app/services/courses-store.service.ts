@@ -3,9 +3,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { CoursesService } from './courses.service';
 
-import Course from '@app/core/interfaces/course.interface';
-import Author from '@app/core/interfaces/author.interface';
-import CourseForm from '@app/core/interfaces/course-form.interface';
+import Course from '@app/core/interfaces/course';
+import Author from '@app/core/interfaces/author';
+import CourseForm from '@app/core/interfaces/course-form';
 
 @Injectable({
     providedIn: 'root',
@@ -123,7 +123,7 @@ export class CoursesStoreService {
                 next: (course) => {
                     if (course.successful) {
                         this.courses$$.next(course);
-                        observer.next(course.result); 
+                        observer.next(course.result);
                         observer.complete();
                     } else {
                         observer.error('Failed to create author');

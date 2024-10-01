@@ -2,12 +2,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import Course from '@app/core/interfaces/course.interface';
+import Course from '@app/core/interfaces/course';
 
 import { CONSTANTS } from '@app/core/environments/constants';
 import { ENDPOINTS } from '@app/core/environments/endpoints';
-import Author from '@app/core/interfaces/author.interface';
-import CourseForm from '@app/core/interfaces/course-form.interface';
+import Author from '@app/core/interfaces/author';
+import CourseForm from '@app/core/interfaces/course-form';
 
 @Injectable({
     providedIn: 'root',
