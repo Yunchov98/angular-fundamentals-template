@@ -5,6 +5,8 @@ import Course from '@app/core/interfaces/course';
 import Author from '@app/core/interfaces/author';
 
 import { CoursesService } from '@app/services/courses.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ROUTES } from '@app/core/environments/endpoints';
 
 @Component({
     selector: 'app-courses',
@@ -20,10 +22,25 @@ export class CoursesComponent implements OnInit, OnDestroy {
     courses: Course[] = [];
     filteredCourses: Course[] = [];
     authors: Author[] = [];
+    courseTitle?: string;
 
-    constructor(private coursesService: CoursesService) {}
+    constructor(
+        private coursesService: CoursesService,
+        private router: Router,
+        private route: ActivatedRoute
+    ) {}
 
     ngOnInit(): void {
+        this.route.queryParams.subscribe((params) => {
+            const title = params['title'];
+
+            if (title) {
+                this.onSearch(title.split(' ').join(','));
+            } else {
+                this.router.navigate([ROUTES.courses]);
+            }
+        });
+
         this.coursesSubscribe$ = this.coursesService.getAll().subscribe({
             next: (response) => {
                 if (response.successful) {
@@ -67,6 +84,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
     }
 
     onSearch(searchTerm: string): void {
+        this.router.navigate(['/courses/filter'], {
+            queryParams: { title: searchTerm.split(' ').join(',') },
+        });
+
         if (searchTerm) {
             this.coursesService
                 .filterCourses(searchTerm.split(' ').join(','))

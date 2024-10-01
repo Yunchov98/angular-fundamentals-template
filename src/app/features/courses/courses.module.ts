@@ -23,7 +23,8 @@ const routes: Routes = [
         canActivate: [AdminGuard],
         component: CourseFormComponent,
     },
-    { path: ':id', component: CourseCardComponent },
+    {path: 'courses/filter', component: CoursesComponent}
+    // { path: ':id', component: CourseCardComponent },
 ];
 
 @NgModule({

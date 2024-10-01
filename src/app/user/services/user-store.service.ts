@@ -6,6 +6,8 @@ import UserMe from '@app/core/interfaces/user-me';
 import { UserService } from './user.service';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
 
+import { CONSTANTS } from '@app/core/environments/constants';
+
 @Injectable({
     providedIn: 'root',
 })
@@ -30,7 +32,7 @@ export class UserStoreService implements OnDestroy {
                     if (user) {
                         this.name$$.next(user.result.name);
 
-                        if (user.result.role === 'admin') {
+                        if (user.result.role === CONSTANTS.adminRole) {
                             this.isAdmin$$.next(true);
                         }
                     } else {
