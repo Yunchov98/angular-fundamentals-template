@@ -1,5 +1,5 @@
 import { Pipe } from '@angular/core';
-import Author from '@app/core/interfaces/author';
+import Author from '@app/core/interfaces/author.interface';
 
 @Pipe({
     name: 'authors',
