@@ -11,14 +11,15 @@ import { CoursesService } from '@app/services/courses.service';
     templateUrl: './courses.component.html',
 })
 export class CoursesComponent implements OnInit, OnDestroy {
+    errorMessage!: string;
+    isShowButtonClicked!: boolean;
+    selectedCourse!: Course;
     coursesSubscribe$!: Subscription;
     authorsSubscribe$!: Subscription;
+    searchSubscribe$!: Subscription;
     courses: Course[] = [];
     filteredCourses: Course[] = [];
     authors: Author[] = [];
-    selectedCourse!: Course;
-    isShowButtonClicked!: boolean;
-    errorMessage!: string;
 
     constructor(private coursesService: CoursesService) {}
 
@@ -36,6 +37,14 @@ export class CoursesComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         if (this.coursesSubscribe$ !== undefined) {
             this.coursesSubscribe$.unsubscribe();
+        }
+
+        if (this.authorsSubscribe$ !== undefined) {
+            this.authorsSubscribe$.unsubscribe();
+        }
+
+        if (this.searchSubscribe$ !== undefined) {
+            this.searchSubscribe$.unsubscribe();
         }
     }
 
@@ -60,7 +69,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     onSearch(searchTerm: string): void {
         if (searchTerm) {
             this.coursesService
-                .filterCourses(searchTerm.split(' ').join(', '))
+                .filterCourses(searchTerm.split(' ').join(','))
                 .subscribe({
                     next: (response) => {
                         if (response.result.length > 0) {
