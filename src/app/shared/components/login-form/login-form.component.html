@@ -6,14 +6,14 @@
                 <div class="form__control">
                     <label for="email">Email</label>
                     <input
-                        type="text"
-                        id="email"
-                        name="email"
-                        placeholder="Input text"
-                        ngModel
                         required
-                        #email="ngModel"
+                        ngModel
                         emailValidator
+                        type="text"
+                        name="email"
+                        id="email"
+                        placeholder="Input text"
+                        #email="ngModel"
                     />
                     <span
                         id="emailErrorMessage"
@@ -29,14 +29,14 @@
                     <label for="password">Password</label>
                     <div class="password-input-wrapper">
                         <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Input text"
-                            ngModel
                             required
-                            #password="ngModel"
+                            ngModel
                             class="password-field"
+                            type="password"
+                            name="password"
+                            id="password"
+                            placeholder="Input text"
+                            #password="ngModel"
                         />
                     </div>
                     <span
@@ -59,7 +59,11 @@
                 </div>
                 <div class="form__text">
                     If you don't have an account you may
-                    <strong>Registration</strong>
+                    <strong
+                        class="registration-button"
+                        routerLink="/registration"
+                        >Registration</strong
+                    >
                 </div>
             </div>
         </div>
