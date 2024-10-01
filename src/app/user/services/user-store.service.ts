@@ -1,9 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { UserService } from './user.service';
+
 import UserMe from '@app/core/interfaces/user-me';
-import { CONSTANTS } from '@app/core/environments/constants';
-import User from '@app/core/interfaces/user';
+
+import { UserService } from './user.service';
+import { SessionStorageService } from '@app/auth/services/session-storage.service';
 
 @Injectable({
     providedIn: 'root',
@@ -17,25 +18,33 @@ export class UserStoreService implements OnDestroy {
 
     subscription$!: Subscription;
 
-    constructor(private userService: UserService) {}
+    constructor(
+        private userService: UserService,
+        private sessionStorageService: SessionStorageService
+    ) {}
 
-    getUser(): Observable<UserMe> {
-        return new Observable<UserMe>((observer) => {
-            this.subscription$ = this.userService.getUser().subscribe({
+    getUser() {
+        if (this.sessionStorageService.getToken()) {
+            this.userService.getUser().subscribe({
                 next: (user: UserMe) => {
-                    this.isAdmin$$.next(
-                        user.result.role === CONSTANTS.adminRole
-                    );
-                    this.name$$.next(user.result.name);
-                    observer.next(user);
-                    observer.complete();
+                    if (user) {
+                        this.name$$.next(user.result.name);
+
+                        if (user.result.role === 'admin') {
+                            this.isAdmin$$.next(true);
+                        }
+                    } else {
+                        this.isAdmin$$.next(false);
+                    }
                 },
-                error: () => {
-                    this.name$$.next('');
+                error: (error) => {
+                    console.error('Error fetching user:', error);
+
                     this.isAdmin$$.next(false);
                 },
             });
-        });
+        }
+        this.isAdmin$$.next(false);
     }
 
     get isAdmin(): boolean {
