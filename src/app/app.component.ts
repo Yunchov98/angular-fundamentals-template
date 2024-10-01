@@ -19,11 +19,11 @@ export class AppComponent implements OnInit {
     constructor(
         private userStoreService: UserStoreService,
         private authService: AuthService,
-        private userService: UserService
+        private userService: UserService,
     ) {}
 
     ngOnInit(): void {
-        this.userStoreService.getUser();
+        // this.userStoreService.getUser();
         this.userService.getUser().subscribe({
             next: (user) => {
                 this.user = user;
