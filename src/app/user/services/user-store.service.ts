@@ -1,5 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import {
+    BehaviorSubject,
+    catchError,
+    Observable,
+    of,
+    Subscription,
+    tap,
+    throwError,
+} from 'rxjs';
 
 import UserMe from '@app/core/interfaces/user-me';
 
@@ -25,28 +33,32 @@ export class UserStoreService implements OnDestroy {
         private sessionStorageService: SessionStorageService
     ) {}
 
-    getUser() {
-        if (this.sessionStorageService.getToken()) {
-            this.userService.getUser().subscribe({
-                next: (user: UserMe) => {
+    getUser(): Observable<UserMe | null> {
+        const token = this.sessionStorageService.getToken();
+
+        if (token) {
+            return this.userService.getUser().pipe(
+                tap((user: UserMe) => {
                     if (user) {
                         this.name$$.next(user.result.name);
 
-                        if (user.result.role === CONSTANTS.adminRole) {
-                            this.isAdmin$$.next(true);
-                        }
+                        this.isAdmin$$.next(
+                            user.result.role === CONSTANTS.adminRole
+                        );
                     } else {
                         this.isAdmin$$.next(false);
                     }
-                },
-                error: (error) => {
+                }),
+                catchError((error) => {
                     console.error('Error fetching user:', error);
-
                     this.isAdmin$$.next(false);
-                },
-            });
+                    return throwError(() => error);
+                })
+            );
+        } else {
+            this.isAdmin$$.next(false);
+            return of(null);
         }
-        this.isAdmin$$.next(false);
     }
 
     get isAdmin(): boolean {
