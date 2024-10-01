@@ -1,42 +1,92 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import Course from '@app/core/interfaces/course.interface';
+
+import { CONSTANTS } from '@app/core/environments/constants';
+import { ENDPOINTS } from '@app/core/environments/endpoints';
+import Author from '@app/core/interfaces/author.interface';
+import CourseForm from '@app/core/interfaces/course-form.interface';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class CoursesService {
-    getAll() {
-        // Add your code here
+    private apiUrl = CONSTANTS.host;
+
+    constructor(private http: HttpClient) {}
+
+    getAll(): Observable<{ successful: boolean; result: Course[] }> {
+        return this.http.get<{ successful: boolean; result: Course[] }>(
+            this.apiUrl + ENDPOINTS.courses
+        );
     }
 
-    createCourse(course: any) { // replace 'any' with the required interface
-        // Add your code here
+    createCourse(
+        course: CourseForm
+    ): Observable<{ successful: boolean; result: Course }> {
+        return this.http.post<{ successful: boolean; result: Course }>(
+            this.apiUrl + ENDPOINTS.addCourse,
+            course
+        );
     }
 
-    editCourse(id: string, course: any) { // replace 'any' with the required interface
-        // Add your code here
+    editCourse(
+        id: string,
+        course: Course
+    ): Observable<{ successful: boolean; result: Course }> {
+        return this.http.put<{ successful: boolean; result: Course }>(
+            this.apiUrl + ENDPOINTS.singleCourse(id),
+            course
+        );
     }
 
-    getCourse(id: string) {
-        // Add your code here
+    getCourse(id: string): Observable<{ successful: boolean; result: Course }> {
+        return this.http.get<{ successful: boolean; result: Course }>(
+            this.apiUrl + ENDPOINTS.singleCourse(id)
+        );
     }
 
-    deleteCourse(id: string) {
-        // Add your code here
+    deleteCourse(id: string): Observable<unknown> {
+        return this.http.delete<unknown>(
+            this.apiUrl + ENDPOINTS.singleCourse(id)
+        );
     }
 
-    filterCourses(value: string) {
-        // Add your code here
+    filterCourses(
+        value: string
+    ): Observable<{ successful: boolean; result: Course[] }> {
+        const params = new HttpParams().set('title', value);
+
+        return this.http.get<{ successful: boolean; result: Course[] }>(
+            this.apiUrl + ENDPOINTS.filteredCourses,
+            {
+                params,
+            }
+        );
     }
 
-    getAllAuthors() {
-        // Add your code here
+    getAllAuthors(): Observable<{ successful: boolean; result: Author[] }> {
+        return this.http.get<{ successful: boolean; result: Author[] }>(
+            this.apiUrl + ENDPOINTS.authors
+        );
     }
 
-    createAuthor(name: string) {
-        // Add your code here
+    createAuthor(
+        name: string
+    ): Observable<{ successful: boolean; result: Author }> {
+        return this.http.post<{ successful: boolean; result: Author }>(
+            this.apiUrl + ENDPOINTS.createAuthor,
+            { name }
+        );
     }
 
-    getAuthorById(id: string) {
-        // Add your code here
+    getAuthorById(
+        id: string
+    ): Observable<{ successful: boolean; result: Author }> {
+        return this.http.get<{ successful: boolean; result: Author }>(
+            this.apiUrl + ENDPOINTS.singleAuthor(id)
+        );
     }
 }
