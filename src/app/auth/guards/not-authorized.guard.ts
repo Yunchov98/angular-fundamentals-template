@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, UrlTree } from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
 import { ROUTES } from '@app/core/environments/endpoints';
@@ -7,10 +7,10 @@ import { ROUTES } from '@app/core/environments/endpoints';
 @Injectable({
     providedIn: 'root',
 })
-export class NotAuthorizedGuard {
+export class NotAuthorizedGuard implements CanActivate {
     constructor(private authService: AuthService, private router: Router) {}
 
-    canActive(): boolean | UrlTree {
+    canActivate(): boolean | UrlTree {
         if (this.authService.isAuthorized) {
             return this.router.createUrlTree([ROUTES.courses]);
         }
