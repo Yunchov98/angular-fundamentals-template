@@ -43,7 +43,7 @@ export class UserStoreService implements OnDestroy {
                         this.name$$.next(user.result.name);
 
                         this.isAdmin$$.next(
-                            user.result.role === CONSTANTS.adminRole
+                            user.result.role === CONSTANTS.ADMIN_ROLE
                         );
                     } else {
                         this.isAdmin$$.next(false);
