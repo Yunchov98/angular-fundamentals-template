@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 import User from '@app/core/interfaces/user';
+import { AuthReturn } from '@app/core/interfaces/authReturn';
 
 import { SessionStorageService } from './session-storage.service';
 
@@ -23,17 +24,9 @@ export class AuthService {
         private sessionStorage: SessionStorageService
     ) {}
 
-    login(user: User): Observable<{
-        successful: boolean;
-        result: string;
-        user: User;
-    }> {
+    login(user: User): Observable<AuthReturn> {
         return this.http
-            .post<{
-                successful: boolean;
-                result: string;
-                user: User;
-            }>(this.apiUrl + ENDPOINTS.login, user)
+            .post<AuthReturn>(this.apiUrl + ENDPOINTS.login, user)
             .pipe(
                 tap((response) => {
                     this.sessionStorage.setToken(response.result);
@@ -43,8 +36,13 @@ export class AuthService {
     }
 
     logout(): void {
-        this.sessionStorage.deleteToken();
-        this.isAuthorized$$.next(false);
+        const TOKEN = this.sessionStorage.getToken();
+
+        if (TOKEN) {
+            this.http.delete(this.apiUrl + ENDPOINTS.logout);
+            this.sessionStorage.deleteToken();
+            this.isAuthorized$$.next(false);
+        }
     }
 
     register(user: User): Observable<User> {
