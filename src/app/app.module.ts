@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
+import { routes } from './app-routing.module';
+import { UserModule } from './user/user.module';
 import { SharedModule } from '@shared/shared.module';
 import { CoursesModule } from './features/courses/courses.module';
 
@@ -13,11 +17,11 @@ import { CourseInfoComponent } from '@features/course-info/course-info.component
 import { AuthorizedGuard } from '@app/auth/guards/authorized.guard';
 import { NotAuthorizedGuard } from '@app/auth/guards/not-authorized.guard';
 
-import { routes } from './app-routing.module';
-import { CoursesService } from '@app/services/courses.service';
+import { coursesReducer } from './store/courses/courses.reducer';
+import { coursesFeatureKey } from './core/environments/constants';
 import { CoursesStoreService } from '@app/services/courses-store.service';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { UserModule } from './user/user.module';
+
+import { CoursesService } from '@app/services/courses.service';
 import { TokenInterceptor } from './auth/interceptors/token.interceptor';
 
 @NgModule({
@@ -30,6 +34,9 @@ import { TokenInterceptor } from './auth/interceptors/token.interceptor';
         HttpClientModule,
         RouterModule.forRoot(routes),
         UserModule,
+        StoreModule.forRoot({
+            [coursesFeatureKey]: coursesReducer,
+        }),
     ],
     providers: [
         AuthorizedGuard,
