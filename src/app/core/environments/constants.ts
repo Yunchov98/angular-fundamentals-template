@@ -1,5 +1,7 @@
 export const CONSTANTS = {
-    host: 'http://localhost:4000',
-    adminRole: 'admin',
+    HOST: 'http://localhost:4000',
+    ADMIN_ROLE: 'admin',
     TOKEN: 'SESSION_TOKEN',
 };
+
+export const coursesFeatureKey = 'courses';
