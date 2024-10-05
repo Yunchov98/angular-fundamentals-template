@@ -17,7 +17,7 @@ export class AuthService {
     private isAuthorized$$ = new BehaviorSubject<boolean>(false);
     public isAuthorized$: Observable<boolean> =
         this.isAuthorized$$.asObservable();
-    private apiUrl = CONSTANTS.host;
+    private apiUrl = CONSTANTS.HOST;
 
     constructor(
         private http: HttpClient,
