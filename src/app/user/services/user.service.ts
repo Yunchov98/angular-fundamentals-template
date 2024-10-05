@@ -23,23 +23,15 @@ export class UserService {
         const TOKEN = this.sessionStorage.getToken();
 
         if (TOKEN) {
-            const headers = new HttpHeaders({
-                Authorization: `${TOKEN}`,
-            });
-
-            return this.http
-                .get<UserMe>(this.apiUrl + ENDPOINTS.getUser, { headers })
-                .pipe(
-                    catchError((error) => {
-                        if (error.status === 401) {
-                            this.sessionStorage.deleteToken();
-                            this.router.navigate([ROUTES.login]);
-                        }
-                        return throwError(
-                            () => new Error('Failed to fetch user')
-                        );
-                    })
-                );
+            return this.http.get<UserMe>(this.apiUrl + ENDPOINTS.getUser).pipe(
+                catchError((error) => {
+                    if (error.status === 401) {
+                        this.sessionStorage.deleteToken();
+                        this.router.navigate([ROUTES.login]);
+                    }
+                    return throwError(() => new Error('Failed to fetch user'));
+                })
+            );
         } else {
             return throwError(() => new Error('Token is missing'));
         }
