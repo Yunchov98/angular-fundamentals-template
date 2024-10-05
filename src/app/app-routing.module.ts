@@ -1,16 +1,12 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/courses', pathMatch: 'full' },
     {
-        path: 'login',
+        path: 'auth',
         loadChildren: () =>
-            import('./shared/shared.module').then((m) => m.SharedModule),
-    },
-    {
-        path: 'registration',
-        loadChildren: () =>
-            import('./shared/shared.module').then((m) => m.SharedModule),
+            import('./auth/auth.module').then((m) => m.AuthModule),
     },
     {
         path: 'courses',
@@ -24,3 +20,9 @@ export const routes: Routes = [
         redirectTo: '/courses',
     },
 ];
+
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
+})
+export class AppRoutingModule {}
