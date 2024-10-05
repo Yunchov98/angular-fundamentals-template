@@ -15,7 +15,7 @@ import { ENDPOINTS } from '@app/core/environments/endpoints';
     providedIn: 'root',
 })
 export class CoursesService {
-    private apiUrl = CONSTANTS.host;
+    private apiUrl = CONSTANTS.HOST;
 
     constructor(private http: HttpClient) {}
 
