@@ -1,17 +1,18 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { SessionStorageService } from '@app/auth/services/session-storage.service';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
+
+import UserMe from '@app/core/interfaces/user-me';
 import { CONSTANTS } from '@app/core/environments/constants';
 import { ENDPOINTS, ROUTES } from '@app/core/environments/endpoints';
-import UserMe from '@app/core/interfaces/user-me';
-import { catchError, Observable, throwError } from 'rxjs';
+import { SessionStorageService } from '@app/auth/services/session-storage.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class UserService {
-    private apiUrl = CONSTANTS.host;
+    private apiUrl = CONSTANTS.HOST;
 
     constructor(
         private sessionStorage: SessionStorageService,
