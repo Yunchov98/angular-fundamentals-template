@@ -1,3 +1,3 @@
 export interface ErrorProp {
-    error: Error;
+    error: Error | string;
 }
