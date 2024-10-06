@@ -3,5 +3,3 @@ export const CONSTANTS = {
     ADMIN_ROLE: 'admin',
     TOKEN: 'SESSION_TOKEN',
 };
-
-export const coursesFeatureKey = 'courses';
