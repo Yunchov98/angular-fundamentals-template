@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+
 import {
     requestAllCourses,
     requestAllCoursesFail,
@@ -20,7 +21,18 @@ import {
     requestSingleCourseSuccess,
 } from './courses.actions';
 
-import { CoursesState } from '@app/core/interfaces/coursesState';
+export const coursesFeatureKey = 'courses';
+
+import Course from '@app/core/interfaces/course';
+
+export interface CoursesState {
+    allCourses: Course[];
+    course: Course | null;
+    isAllCoursesLoading: boolean;
+    isSingleCourseLoading: boolean;
+    isSearchState: boolean;
+    errorMessage: string;
+}
 
 export const initialState: CoursesState = {
     allCourses: [],
