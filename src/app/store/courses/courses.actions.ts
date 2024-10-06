@@ -6,7 +6,7 @@ import { ErrorProp } from '@app/core/interfaces/errorProp';
 import { CourseProp } from '@app/core/interfaces/courseProp';
 import { CoursesProp } from '@app/core/interfaces/coursesProp';
 import { EditCourseProp } from '@app/core/interfaces/editCourseProp';
-import { DeleteCourseProp } from '@app/core/interfaces/deleteCourseProp';
+import { IdProp } from '@app/core/interfaces/deleteCourseProp';
 
 export const requestAllCourses = createAction(
     CoursesConstants.REQUEST_ALL_COURSES
@@ -24,7 +24,7 @@ export const requestAllCoursesFail = createAction(
 
 export const requestSingleCourse = createAction(
     CoursesConstants.REQUEST_SINGLE_COURSE,
-    props<{id: string}>()
+    props<IdProp>()
 );
 
 export const requestSingleCourseSuccess = createAction(
@@ -54,7 +54,7 @@ export const requestFilteredCoursesFail = createAction(
 
 export const requestDeleteCourse = createAction(
     CoursesConstants.REQUEST_DELETE_COURSE,
-    props<DeleteCourseProp>()
+    props<IdProp>()
 );
 
 export const requestDeleteCourseSuccess = createAction(
