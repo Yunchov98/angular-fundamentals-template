@@ -7,7 +7,6 @@ import { CoursesRoutingModule } from './courses-routing.module';
 
 import { CourseListComponent } from './course-list/course-list.component';
 
-
 const components = [CourseListComponent];
 
 @NgModule({
