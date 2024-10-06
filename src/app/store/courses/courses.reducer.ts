@@ -21,18 +21,7 @@ import {
     requestSingleCourseSuccess,
 } from './courses.actions';
 
-export const coursesFeatureKey = 'courses';
-
-import Course from '@app/core/interfaces/course';
-
-export interface CoursesState {
-    allCourses: Course[];
-    course: Course | null;
-    isAllCoursesLoading: boolean;
-    isSingleCourseLoading: boolean;
-    isSearchState: boolean;
-    errorMessage: string;
-}
+import { CoursesState } from '@app/core/interfaces/coursesState';
 
 export const initialState: CoursesState = {
     allCourses: [],
