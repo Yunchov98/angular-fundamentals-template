@@ -44,7 +44,7 @@ export const requestFilteredCourses = createAction(
 
 export const requestFilteredCoursesSuccess = createAction(
     CoursesConstants.REQUEST_FILTERED_COURSES_SUCCESS,
-    props<CourseProp>()
+    props<CoursesProp>()
 );
 
 export const requestFilteredCoursesFail = createAction(
