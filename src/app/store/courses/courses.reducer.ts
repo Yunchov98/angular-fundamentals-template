@@ -44,7 +44,7 @@ export const coursesReducer = createReducer(
     })),
     on(requestAllCoursesFail, (state, { error }) => ({
         ...state,
-        errorMessage: error.message,
+        errorMessage: typeof error === 'string' ? error : error.message,
         isAllCoursesLoading: false,
     })),
     on(requestSingleCourse, (state) => ({
@@ -58,7 +58,7 @@ export const coursesReducer = createReducer(
     })),
     on(requestSingleCourseFail, (state, { error }) => ({
         ...state,
-        errorMessage: error.message,
+        errorMessage: typeof error === 'string' ? error : error.message,
         isSingleCourseLoading: false,
     })),
     on(requestFilteredCourses, (state) => ({
@@ -66,15 +66,15 @@ export const coursesReducer = createReducer(
         isSearchState: true,
         isAllCoursesLoading: true,
     })),
-    on(requestFilteredCoursesSuccess, (state, { course }) => ({
+    on(requestFilteredCoursesSuccess, (state, { courses }) => ({
         ...state,
-        course,
+        allCourses: courses,
         isSearchState: false,
         isAllCoursesLoading: false,
     })),
     on(requestFilteredCoursesFail, (state, { error }) => ({
         ...state,
-        errorMessage: error.message,
+        errorMessage: typeof error === 'string' ? error : error.message,
         isAllCoursesLoading: false,
     })),
     on(requestDeleteCourse, (state) => ({
@@ -87,7 +87,7 @@ export const coursesReducer = createReducer(
     })),
     on(requestDeleteCourseFail, (state, { error }) => ({
         ...state,
-        errorMessage: error.message,
+        errorMessage: typeof error === 'string' ? error : error.message,
         isAllCoursesLoading: false,
     })),
     on(requestEditCourse, (state) => ({
@@ -101,7 +101,7 @@ export const coursesReducer = createReducer(
     })),
     on(requestEditCourseFail, (state, { error }) => ({
         ...state,
-        errorMessage: error.message,
+        errorMessage: typeof error === 'string' ? error : error.message,
         isAllCoursesLoading: false,
     })),
     on(requestCreateCourse, (state) => ({
@@ -115,7 +115,7 @@ export const coursesReducer = createReducer(
     })),
     on(requestCreateCourseFail, (state, { error }) => ({
         ...state,
-        errorMessage: error.message,
+        errorMessage: typeof error === 'string' ? error : error.message,
         isSingleCourseLoading: false,
     }))
 );
