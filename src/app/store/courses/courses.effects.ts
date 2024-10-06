@@ -14,7 +14,6 @@ import {
     requestCreateCourseSuccess,
     requestDeleteCourse,
     requestDeleteCourseFail,
-    requestDeleteCourseSuccess,
     requestEditCourse,
     requestEditCourseFail,
     requestEditCourseSuccess,
