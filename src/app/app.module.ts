@@ -13,10 +13,7 @@ import { CoursesModule } from './features/courses/courses.module';
 import { AuthorizedGuard } from '@app/auth/guards/authorized.guard';
 import { NotAuthorizedGuard } from '@app/auth/guards/not-authorized.guard';
 
-import {
-    coursesFeatureKey,
-    coursesReducer,
-} from './store/courses/courses.reducer';
+import { coursesReducer } from './store/courses/courses.reducer';
 
 import { CoursesService } from '@app/services/courses.service';
 import { CoursesStoreService } from '@app/services/courses-store.service';
@@ -26,6 +23,8 @@ import { TokenInterceptor } from './auth/interceptors/token.interceptor';
 import { AppComponent } from '@app/app.component';
 import { CoursesComponent } from './features/courses/courses.component';
 import { CourseInfoComponent } from '@features/course-info/course-info.component';
+
+import { coursesFeatureKey } from './core/environments/constants';
 
 @NgModule({
     declarations: [AppComponent, CourseInfoComponent, CoursesComponent],
