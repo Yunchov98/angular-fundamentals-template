@@ -10,19 +10,22 @@ import { UserModule } from './user/user.module';
 import { SharedModule } from '@shared/shared.module';
 import { CoursesModule } from './features/courses/courses.module';
 
-import { AppComponent } from '@app/app.component';
-import { CoursesComponent } from './features/courses/courses.component';
-import { CourseInfoComponent } from '@features/course-info/course-info.component';
-
 import { AuthorizedGuard } from '@app/auth/guards/authorized.guard';
 import { NotAuthorizedGuard } from '@app/auth/guards/not-authorized.guard';
 
-import { coursesReducer } from './store/courses/courses.reducer';
-import { coursesFeatureKey } from './core/environments/constants';
-import { CoursesStoreService } from '@app/services/courses-store.service';
+import {
+    coursesFeatureKey,
+    coursesReducer,
+} from './store/courses/courses.reducer';
 
 import { CoursesService } from '@app/services/courses.service';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+
 import { TokenInterceptor } from './auth/interceptors/token.interceptor';
+
+import { AppComponent } from '@app/app.component';
+import { CoursesComponent } from './features/courses/courses.component';
+import { CourseInfoComponent } from '@features/course-info/course-info.component';
 
 @NgModule({
     declarations: [AppComponent, CourseInfoComponent, CoursesComponent],
