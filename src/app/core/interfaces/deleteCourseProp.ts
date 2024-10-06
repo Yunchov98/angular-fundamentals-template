@@ -1,3 +1,3 @@
-export interface DeleteCourseProp {
+export interface IdProp {
     id: string;
 }
