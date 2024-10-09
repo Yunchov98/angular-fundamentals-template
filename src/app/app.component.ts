@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { UserStoreService } from './user/services/user-store.service';
 import { AuthService } from './auth/services/auth.service';
+import { UserStoreService } from './user/services/user-store.service';
 
 import Course from './core/interfaces/course';
 import UserMe from './core/interfaces/user-me';
+
+import { CoursesStateFacade } from './store/courses/courses.facade';
 
 @Component({
     selector: 'app-root',
@@ -16,13 +19,19 @@ export class AppComponent implements OnInit {
     courses!: { successful: boolean; result: Course[] };
     errorMessage!: string;
     user?: UserMe | null;
+    courses$: Observable<Course[]>;
 
     constructor(
         private userStoreService: UserStoreService,
-        private authService: AuthService
-    ) {}
+        private authService: AuthService,
+        private coursesFacade: CoursesStateFacade
+    ) {
+        this.courses$ = this.coursesFacade.courses$;
+    }
 
     ngOnInit(): void {
+        this.coursesFacade.getAllCourses();
+
         this.userStoreService.getUser().subscribe({
             next: (user) => {
                 this.user = user;
