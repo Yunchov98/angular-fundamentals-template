@@ -8,7 +8,7 @@ import { faIcons } from '@app/shared/common/fa-icons';
     templateUrl: './course-list.component.html',
 })
 export class CourseListComponent {
-    @Input() courses!: Course[];
+    @Input() courses!: Course[] | null;
     @Input() editable!: boolean;
 
     @Output() showCourse = new EventEmitter<Course>();
