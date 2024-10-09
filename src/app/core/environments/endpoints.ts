@@ -16,4 +16,6 @@ export const ROUTES = {
     courses: '/courses',
     login: '/login',
     addCourse: '/courses/add',
+    filteredCourses: '/courses/filter',
+    singleComponent: (id: string) => `/courses/${id}`,
 };
