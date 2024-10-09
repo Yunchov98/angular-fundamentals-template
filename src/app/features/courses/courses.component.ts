@@ -1,108 +1,57 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 import Course from '@app/core/interfaces/course';
-import Author from '@app/core/interfaces/author';
-
-import { CoursesService } from '@app/services/courses.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ROUTES } from '@app/core/environments/endpoints';
+import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 
 @Component({
     selector: 'app-courses',
     templateUrl: './courses.component.html',
 })
 export class CoursesComponent implements OnInit, OnDestroy {
-    errorMessage!: string;
-    isShowButtonClicked!: boolean;
-    selectedCourse!: Course;
-    coursesSubscribe$!: Subscription;
-    authorsSubscribe$!: Subscription;
     searchSubscribe$!: Subscription;
-    courses: Course[] = [];
-    filteredCourses: Course[] = [];
-    authors: Author[] = [];
-    courseTitle?: string;
+    courses$: Observable<Course[]> | null;
+    errorMessage$: Observable<string | null>;
+    filteredCourses$!: Observable<Course[] | null>;
 
     constructor(
-        private coursesService: CoursesService,
         private router: Router,
-        private route: ActivatedRoute
-    ) {}
+        private route: ActivatedRoute,
+        private coursesFacade: CoursesStateFacade
+    ) {
+        this.courses$ = this.coursesFacade.allCourses$;
+        this.errorMessage$ = this.coursesFacade.errorMessage$;
+    }
 
     ngOnInit(): void {
+        this.coursesFacade.getAllCourses();
+
         this.route.queryParams.subscribe((params) => {
             const title = params['title'];
 
             if (title) {
-                this.onSearch(title.split(' ').join(','));
+                this.coursesFacade.getFilteredCourses(title);
             } else {
-                this.router.navigate([ROUTES.courses]);
+                this.coursesFacade.getAllCourses();
             }
-        });
-
-        this.coursesSubscribe$ = this.coursesService.getAll().subscribe({
-            next: (response) => {
-                if (response.successful) {
-                    this.courses = response.result;
-                }
-            },
-            error: (error) => (this.errorMessage = error.error.message),
         });
     }
 
     ngOnDestroy(): void {
-        if (this.coursesSubscribe$ !== undefined) {
-            this.coursesSubscribe$.unsubscribe();
-        }
-
-        if (this.authorsSubscribe$ !== undefined) {
-            this.authorsSubscribe$.unsubscribe();
-        }
-
         if (this.searchSubscribe$ !== undefined) {
             this.searchSubscribe$.unsubscribe();
         }
     }
 
-    getauthorName(authorIds: string[]): string[] {
-        return authorIds.map((id) => {
-            const author = this.authors.find((a) => a.id === id);
-
-            return author ? author.name : 'Unknown author';
-        });
-    }
-
     onShowCourse(course: Course) {
-        this.selectedCourse = course;
-        this.isShowButtonClicked = true;
-        this;
-    }
-
-    onBack() {
-        this.isShowButtonClicked = false;
+        this.router.navigate([ROUTES.singleComponent(course.id)]);
     }
 
     onSearch(searchTerm: string): void {
-        this.router.navigate(['/courses/filter'], {
+        this.router.navigate([ROUTES.filteredCourses], {
             queryParams: { title: searchTerm.split(' ').join(',') },
         });
-
-        if (searchTerm) {
-            this.coursesService
-                .filterCourses(searchTerm.split(' ').join(','))
-                .subscribe({
-                    next: (response) => {
-                        if (response.result.length > 0) {
-                            this.filteredCourses = response.result;
-                            this.errorMessage = '';
-                        } else {
-                            this.errorMessage =
-                                'Course with this title does not exist.';
-                        }
-                    },
-                    error: (error) => console.log(error),
-                });
-        }
     }
 }
