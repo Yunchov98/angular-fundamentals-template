@@ -13,32 +13,42 @@
         routerLink="/auth/login"
     ></app-button>
 </app-header>
-<div class="app-root">
-    <app-info
-        title="Your List Is Empty"
-        text="Please use 'Add New Course' button to add your first course"
-    >
-        <app-button
-            routerLink="/courses/add"
-            buttonText="add new course"
-        ></app-button>
-    </app-info>
+<ng-container *ngIf="courses$ | async as courses; else loading">
+    <div class="app-root">
+        <app-info
+            title="{{
+                courses.length > 0
+                    ? 'You have ' + courses.length + ' courses'
+                    : 'Your list is empty'
+            }}"
+            text="Please use 'Add New Course' button to add your first course"
+        >
+            <app-button
+                routerLink="/courses/add"
+                buttonText="add new course"
+            ></app-button>
+        </app-info>
 
-    <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
 
-    <!-- Course Card component -->
-    <!-- <app-course-card></app-course-card> -->
+        <!-- Course Card component -->
+        <!-- <app-course-card></app-course-card> -->
 
-    <!-- <app-courses></app-courses> -->
-    <!-- Login Form component -->
-    <!-- <app-login-form></app-login-form> -->
+        <!-- <app-courses></app-courses> -->
+        <!-- Login Form component -->
+        <!-- <app-login-form></app-login-form> -->
 
-    <!-- Login Form component -->
-    <!-- <app-registration-form></app-registration-form> -->
+        <!-- Login Form component -->
+        <!-- <app-registration-form></app-registration-form> -->
 
-    <!-- Login Form component -->
-    <!-- <app-course-form></app-course-form> -->
+        <!-- Login Form component -->
+        <!-- <app-course-form></app-course-form> -->
 
-    <!-- Modal component -->
-    <!-- <app-modal [message]="'Message'" [title]="'Title'" [okButtonText]="'Ok'" [cancelButtonText]="'Cancel'"></app-modal> -->
-</div>
+        <!-- Modal component -->
+        <!-- <app-modal [message]="'Message'" [title]="'Title'" [okButtonText]="'Ok'" [cancelButtonText]="'Cancel'"></app-modal> -->
+    </div>
+</ng-container>
+
+<ng-template #loading>
+    <div>Loading...</div>
+</ng-template>
