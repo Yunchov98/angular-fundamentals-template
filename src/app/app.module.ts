@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -26,6 +27,8 @@ import { CourseInfoComponent } from '@features/course-info/course-info.component
 
 import { coursesFeatureKey } from './core/environments/constants';
 
+import { CoursesEffects } from './store/courses/courses.effects';
+
 @NgModule({
     declarations: [AppComponent, CourseInfoComponent, CoursesComponent],
     imports: [
@@ -39,6 +42,7 @@ import { coursesFeatureKey } from './core/environments/constants';
         StoreModule.forRoot({
             [coursesFeatureKey]: coursesReducer,
         }),
+        EffectsModule.forRoot([CoursesEffects]),
     ],
     providers: [
         AuthorizedGuard,
